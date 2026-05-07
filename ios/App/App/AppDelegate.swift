@@ -6,18 +6,27 @@ import WebKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var scrollObserver: NSKeyValueObservation?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if let vc = self.window?.rootViewController as? CAPBridgeViewController {
-                let css = "body, html { overflow-x: hidden !important; max-width: 100vw !important; }"
-                let js = "var s = document.createElement('style'); s.innerText = `\(css)`; document.head.appendChild(s);"
-                vc.webView?.evaluateJavaScript(js, completionHandler: nil)
-                vc.webView?.scrollView.bounces = false
-                vc.webView?.scrollView.showsHorizontalScrollIndicator = false
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.blockHorizontalScroll()
         }
         return true
+    }
+
+    func blockHorizontalScroll() {
+        guard let vc = window?.rootViewController as? CAPBridgeViewController,
+              let scrollView = vc.webView?.scrollView else { return }
+
+        scrollView.alwaysBounceHorizontal = false
+        scrollView.showsHorizontalScrollIndicator = false
+
+        scrollObserver = scrollView.observe(\.contentOffset, options: .new) { sv, _ in
+            if sv.contentOffset.x != 0 {
+                sv.setContentOffset(CGPoint(x: 0, y: sv.contentOffset.y), animated: false)
+            }
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
