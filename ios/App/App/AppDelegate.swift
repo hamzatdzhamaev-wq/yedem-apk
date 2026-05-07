@@ -6,27 +6,35 @@ import WebKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var scrollObserver: NSKeyValueObservation?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.blockHorizontalScroll()
+            self.fixWebViewScroll()
         }
         return true
     }
 
-    func blockHorizontalScroll() {
+    func fixWebViewScroll() {
         guard let vc = window?.rootViewController as? CAPBridgeViewController,
-              let scrollView = vc.webView?.scrollView else { return }
+              let webView = vc.webView else { return }
 
-        scrollView.alwaysBounceHorizontal = false
-        scrollView.showsHorizontalScrollIndicator = false
+        webView.scrollView.alwaysBounceHorizontal = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
 
-        scrollObserver = scrollView.observe(\.contentOffset, options: .new) { sv, _ in
-            if sv.contentOffset.x != 0 {
-                sv.setContentOffset(CGPoint(x: 0, y: sv.contentOffset.y), animated: false)
-            }
-        }
+        let css = "html { overflow-x: hidden !important; } body { overflow-x: hidden !important; max-width: 100vw !important; }"
+        let js = """
+        (function() {
+            if (document.getElementById('yedem-ios-fix')) return;
+            var s = document.createElement('style');
+            s.id = 'yedem-ios-fix';
+            s.textContent = '\(css)';
+            (document.head || document.documentElement).appendChild(s);
+        })();
+        """
+
+        let userScript = WKUserScript(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        webView.configuration.userContentController.addUserScript(userScript)
+        webView.evaluateJavaScript(js, completionHandler: nil)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
