@@ -1,19 +1,10 @@
 workflows:
-  ios-release:
-    name: Yedem iOS Release
+  ios-unsigned:
+    name: Yedem iOS Unsigned IPA
     max_build_duration: 60
     instance_type: mac_mini_m2
-    integrations:
-      app_store_connect: Yedem_ASC_Key
 
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: ru.eda_yedem.app
-      vars:
-        XCODE_PROJECT: "ios/App/App.xcodeproj"
-        XCODE_SCHEME: "App"
-        BUNDLE_ID: "ru.eda_yedem.app"
       node: latest
 
     scripts:
@@ -23,25 +14,26 @@ workflows:
       - name: Sync Capacitor iOS
         script: npx cap sync ios
 
-      - name: Set build number
+      - name: Build unsigned IPA
         script: |
-          LATEST=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo "0")
-          agvtool new-version -all $((LATEST + 1))
-        working_directory: ios/App
+          xcodebuild \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE=""
 
-      - name: Build iOS
+      - name: Package IPA
         script: |
-          xcode-project build-ipa \
-            --project "$XCODE_PROJECT" \
-            --scheme "$XCODE_SCHEME"
+          mkdir -p output
+          cd build/Build/Products/Release-iphoneos
+          mkdir -p Payload
+          cp -r App.app Payload/
+          zip -r ../../../../output/Yedem-unsigned.ipa Payload/
 
     artifacts:
-      - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
-        beta_groups:
-          - Tester
+      - output/Yedem-unsigned.ipa
