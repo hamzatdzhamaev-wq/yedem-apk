@@ -9,7 +9,7 @@ workflows:
 
     scripts:
       - name: Install npm dependencies
-        script: npm install
+        script: npm install --ignore-scripts
 
       - name: Sync Capacitor iOS
         script: npx cap sync ios
