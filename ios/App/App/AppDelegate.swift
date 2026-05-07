@@ -1,5 +1,6 @@
 import UIKit
 import Capacitor
+import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -7,7 +8,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let vc = self.window?.rootViewController as? CAPBridgeViewController {
+                let css = "body, html { overflow-x: hidden !important; max-width: 100vw !important; }"
+                let js = "var s = document.createElement('style'); s.innerText = `\(css)`; document.head.appendChild(s);"
+                vc.webView?.evaluateJavaScript(js, completionHandler: nil)
+                vc.webView?.scrollView.bounces = false
+                vc.webView?.scrollView.showsHorizontalScrollIndicator = false
+            }
+        }
         return true
     }
 
