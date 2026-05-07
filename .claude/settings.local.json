@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(./gradlew assembleDebug)",
+      "Read(//c/Users/PC/Desktop/**)",
+      "PowerShell(cmd /c \"dir C:\\\\Users\\\\PC\\\\Desktop\\\\Yedem-APK\")"
+    ]
+  }
+}

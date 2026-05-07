@@ -1,0 +1,38 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+# www/ wird benötigt für cap sync auf Codemagic
+android/app/build/
+android/build/
+android/.gradle/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Signing Keys (WICHTIG!)
+*.keystore
+*.jks
+keystore.properties
+
+# Environment
+.env
+.env.local
+
+# Capacitor
+capacitor.config.json
+android/app/src/main/assets/public/
+
+# Logs
+*.log
+logs/

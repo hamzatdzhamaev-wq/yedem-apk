@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Yedem</string>
+    <string name="title_activity_main">Yedem</string>
+    <string name="package_name">ru.eda_yedem.app</string>
+    <string name="custom_url_scheme">ru.eda_yedem.app</string>
+</resources>

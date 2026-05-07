@@ -1,0 +1,44 @@
+{
+  "name": "yedem-apk",
+  "version": "1.0.0",
+  "description": "Yedem Android APK - Food Delivery App",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build-all.js",
+    "build:web": "cd ../yedem-website && npm run build",
+    "copy": "node scripts/copy-web-assets.js",
+    "sync": "npx cap sync android",
+    "open": "npx cap open android",
+    "apk:debug": "cd android && gradlew assembleDebug",
+    "apk:release": "cd android && gradlew assembleRelease",
+    "clean": "rm -rf www android/app/build",
+    "install": "adb install android/app/build/outputs/apk/debug/app-debug.apk",
+    "run": "npm run build && npm run install"
+  },
+  "keywords": [
+    "yedem",
+    "food-delivery",
+    "android",
+    "capacitor"
+  ],
+  "author": "Yedem",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/camera": "^8.2.0",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/geolocation": "^8.2.0",
+    "@capacitor/ios": "^8.3.1",
+    "@capacitor/local-notifications": "^8.0.2",
+    "@capacitor/network": "^8.0.1",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/push-notifications": "^8.0.3",
+    "fs-extra": "^11.3.4"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(adb devices:*)",
+      "Bash(./gradlew assembleDebug)",
+      "Bash(JAVA_HOME=\"C:/Program Files/Eclipse Adoptium/jdk-25.0.0.36-hotspot\" ./gradlew assembleDebug)",
+      "Bash(JAVA_HOME=\"C:/Program Files/Eclipse Adoptium/jdk-17.0.18.8-hotspot\" ./gradlew assembleDebug)",
+      "Bash(curl:*)",
+      "Bash(JAVA_HOME=\"C:/Program Files/Eclipse Adoptium/jdk-17.0.18.8-hotspot\" GRADLE_OPTS=\"-Djava.net.preferIPv4Stack=true\" ./gradlew assembleDebug)",
+      "Bash(grep -oh \"/api/[a-zA-Z/_-]*\" C:/Users/PC/Desktop/Yedem-APK/www/_next/static/chunks/*.js C:/Users/PC/Desktop/Yedem-APK/www/_next/static/chunks/app/*.js)",
+      "Bash(,)",
+      "Bash(grep -oh \"api.eda-yedem[^\\\\\"'`,\\)]*\" C:/Users/PC/Desktop/Yedem-APK/www/_next/static/chunks/app/page-ee3981c9799d4568.js)",
+      "Bash(python3 -m json.tool)",
+      "Bash(adb shell:*)",
+      "Bash(adb:*)",
+      "Bash(openssl s_client -connect api.eda-yedem.ru:443 -servername api.eda-yedem.ru)",
+      "Bash(grep -o 'src:.\\\\{0,100\\\\}image_url.\\\\{0,50\\\\}' C:/Users/PC/Desktop/Yedem-APK/www/_next/static/chunks/app/page-ee3981c9799d4568.js)",
+      "Bash(grep -o 'src:u\\\\.image_url.\\\\{0,100\\\\}' C:/Users/PC/Desktop/Yedem-APK/www/_next/static/chunks/app/page-ee3981c9799d4568.js)",
+      "Bash(grep -o 'src:.\\\\{0,80\\\\}image_url.\\\\{0,30\\\\}' \"C:/Users/PC/Desktop/Yedem-APK/android/app/src/main/assets/public/_next/static/chunks/app/page-ee3981c9799d4568.js\")",
+      "Bash(JAVA_HOME=\"C:/Program Files/Eclipse Adoptium/jdk-21.0.11.10-hotspot\" GRADLE_OPTS=\"-Djava.net.preferIPv4Stack=true\" ./gradlew assembleDebug)",
+      "Bash(grep -o 'src:.\\\\{0,100\\\\}\\\\.image.\\\\{0,50\\\\}' \"C:/Users/PC/Desktop/Yedem-APK/android/app/src/main/assets/public/_next/static/chunks/app/page-ee3981c9799d4568.js\")"
+    ]
+  }
+}
